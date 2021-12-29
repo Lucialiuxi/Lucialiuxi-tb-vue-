@@ -1,37 +1,39 @@
 <template>
   <div class="loginPage">
-      <h1 class="logo">Teambition</h1>
-      <el-form
-          :model="ruleForm" 
-          status-icon 
-          :rules="rules" 
-          ref="ruleForm" 
-          label-width="100px" 
-          class="ruleForm"
-      >
-          <el-form-item
-              :label="item.name" 
-              :prop="item.prop"
-              v-for="item in formConfig()"
-              :key="item.id"
-              :class="item.className"
-          >
-              <el-input
-                  v-if="!item.children"
-                  :type="item.type" 
-                  v-model="ruleForm[item.id]" 
-                  :autocomplete="item.autocomplete"
-              ></el-input>
-              <el-button
-                  v-else
-                  v-for="childItem in item.children"
-                  :key="childItem.id"
-                  :type="childItem.type" 
-                  v-model="ruleForm[childItem.id]"
-                  @click="childItem.clickFn"
-              >{{childItem.name}}</el-button>
-          </el-form-item>
-      </el-form>
+      <div class="formWrap">
+        <h1 class="logo">Teambition</h1>
+        <el-form
+            :model="ruleForm" 
+            status-icon 
+            :rules="rules" 
+            ref="ruleForm" 
+            label-width="100px" 
+            class="ruleForm"
+        >
+            <el-form-item
+                :label="item.name" 
+                :prop="item.prop"
+                v-for="item in formConfig()"
+                :key="item.id"
+                :class="item.className"
+            >
+                <el-input
+                    v-if="!item.children"
+                    :type="item.type" 
+                    v-model="ruleForm[item.id]" 
+                    :autocomplete="item.autocomplete"
+                ></el-input>
+                <el-button
+                    v-else
+                    v-for="childItem in item.children"
+                    :key="childItem.id"
+                    :type="childItem.type" 
+                    v-model="ruleForm[childItem.id]"
+                    @click="childItem.clickFn"
+                >{{childItem.name}}</el-button>
+            </el-form-item>
+        </el-form>
+      </div>
   </div>
 </template>
 
