@@ -1,19 +1,17 @@
 // 任务
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://localhost:8080/';
+import { requestMethod } from '@/utils/requestMethod';
 
 type TaskItem = {
-    userLoginName?: String,//用户的登录名
-    fileId: Number,//项目文件id
-    taskItemId: Number,//任务列表id
-    taskItemName?: String,//任务列表名
-    subTaskCount: Number,//子任务数量
-    index: Number //按照 未完成-进行中-已完成 排序
+    userLoginName?: string,//用户的登录名
+    fileId: number,//项目文件id
+    taskItemId: number,//任务列表id
+    taskItemName?: string,//任务列表名
+    subTaskCount: number,//子任务数量
+    index: number //按照 未完成-进行中-已完成 排序
 };
 
 // 首页新建任务后，新建任务下的默认的任务列表
-export const CreateTaskItemServer = (param: { fileId: Number }) => {
+export const CreateTaskItemServer = (param: { fileId: number }) => {
     const arr: TaskItem[] = [];
     for (let i = 0; i < 3; i++) {
         arr.push({
@@ -26,16 +24,16 @@ export const CreateTaskItemServer = (param: { fileId: Number }) => {
     arr[0].taskItemName='待处理';
     arr[1].taskItemName='进行中';
     arr[2].taskItemName='已完成';
-    return axios.post('/task/createTaskItem', {param,arr})
+    return requestMethod('/task/createTaskItem', {param,arr})
 }
 
-//新建一个任务列表param:{index:XXX,taskItemName:XXX,fileId:Number}
+//新建一个任务列表param:{index:XXX,taskItemName:XXX,fileId:number}
 export const CreateANewTaskItemServer = (param: {
-    index: Number,
-    taskItemName: String,
-    fileId: Number,
+    index: number,
+    taskItemName: string,
+    fileId: number,
 }) => {
-    return axios.post('/task/createANewTaskItem', {
+    return requestMethod('/task/createANewTaskItem', {
         ...param,
         taskItemId:Math.ceil((Math.random()-.5)*10000000+ Date.now()),
         subTaskCount:0,
@@ -43,69 +41,69 @@ export const CreateANewTaskItemServer = (param: {
 }
 
 //删除一个任务列表
-export const deleteATaskItemServer = (param: {fileId: Number , taskItemId: Number }) => {
-    return axios.post('/task/deleteATaskItem', param)
+export const deleteATaskItemServer = (param: {fileId: number , taskItemId: number }) => {
+    return requestMethod('/task/deleteATaskItem', param)
 }
 
 // 查询一个项目文件下的任务列表
-export const GetTaskItemServer = (param: { fileId: Number }) => {
-    return axios.post('/task/getTaskItem', param)
+export const GetTaskItemServer = (param: { fileId: number }) => {
+    return requestMethod('/task/getTaskItem', param)
 }
 
 //删除一个项目问价下所有的任务列表  和 任务列表下的子任务 ----在删除一个文件的时候
 export const DeleteAllTaskItemAndSubTaskInAFileServer = (param : any) => {
-    return axios.post('/task/deleteAllTaskItemAndSubTaskInAFile', param)
+    return requestMethod('/task/deleteAllTaskItemAndSubTaskInAFile', param)
 }
 
 
 //新建一个子任务
 export const CreateASubTaskServer = (param: {
-    checked: Boolean, 
-    deadline: String,
-    fileId: Number,
-    index: Number,
-    taskItemId: Number
-    subTaskName: String,
-    subTaskId: String,
+    checked: boolean, 
+    deadline: string,
+    fileId: number,
+    index: number,
+    taskItemId: number
+    subTaskName: string,
+    subTaskId: string,
     tag: string[],
     urgencyLevel: '普通' | '紧急' | '非常紧急',
 }) => {
-    return axios.post('/task/createASubTask', param);
+    return requestMethod('/task/createASubTask', param);
 }
 
 
 // 查询所有当前项目文件的任务列表的任务
-export const GetAllSubTasksServer = (param: {fileId: Number}) => {
-    return axios.post('/task/getAllSubTasks',param)
+export const GetAllSubTasksServer = (param: {fileId: number}) => {
+    return requestMethod('/task/getAllSubTasks',param)
 }
 
 
 // 删除一个任务列表下的所有任务
-export const DeleteAllSubTasksServer = (param: {fileId: Number, taskItemId: Number}) => {
-    return axios.post('/task/deleteAllSubTasks', param)
+export const DeleteAllSubTasksServer = (param: {fileId: number, taskItemId: number}) => {
+    return requestMethod('/task/deleteAllSubTasks', param)
 }
 
 
 // 修改某个任务列表的名字
-export const ModifyATaskItemNameServer = (param: {fileId: Number , taskItemId: Number, taskItemName: String}) =>{
-    return axios.post('/task/modifyATaskItemName',param)
+export const ModifyATaskItemNameServer = (param: {fileId: number , taskItemId: number, taskItemName: string}) =>{
+    return requestMethod('/task/modifyATaskItemName',param)
 }
 
 // 复制 or 移动 一个任务列表的所有任务到另一个列表 MoveOrCopy:'move'/'copy'
 export const MoveOrCopySubtaskToAnotherTaskItemServer = (param: {
-    fileId: Number, 
-    taskItemId: Number, 
+    fileId: number, 
+    taskItemId: number, 
     MoveOrCopy: 'move' | 'copy' ,
-    currentTaskItemId: Number,
+    currentTaskItemId: number,
  }) => {
-    return axios.post('/task/moveOrCopySubtaskToAnotherTaskItem',param)
+    return requestMethod('/task/moveOrCopySubtaskToAnotherTaskItem',param)
 }
 
-// { taskItemId: Number, subTaskId: Number, checked: Boolean }
+// { taskItemId: number, subTaskId: number, checked: boolean }
 export const SwitchToCheckSubtaskServer = (param: { 
-    taskItemId: Number, 
-    subTaskId: Number, 
-    checked: Boolean,
+    taskItemId: number, 
+    subTaskId: number, 
+    checked: boolean,
  }) => {
-    return axios.post('/task/switchToCheckSubtask',param)
+    return requestMethod('/task/switchToCheckSubtask',param)
 }

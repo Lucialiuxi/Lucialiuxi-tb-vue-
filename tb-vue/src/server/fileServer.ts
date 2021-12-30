@@ -1,70 +1,68 @@
 // 项目文件file
-import axios from 'axios';
-
-axios.defaults.baseURL = 'http://localhost:8080/';
+import { requestMethod } from '@/utils/requestMethod';
 
 //新建项目文件夹
 export const createAFileServer = (param: {
-    userLoginName: String,
-    fileName:  String,
-    fileAbstract: String,
-    fileId: Number,
-    star: Boolean,
-    inRecycleBin: Boolean
+    userLoginName: string,
+    fileName:  string,
+    fileAbstract: string,
+    fileId: number,
+    star: boolean,
+    inRecycleBin: boolean
 }) => {
-    return axios.post('/file/createFile', param);
+    return requestMethod('/file/createFile', param);
 }
 
 
 /**
  * 通过id查询项目文件信息
- * @param {fileId: Number} param 
+ * @param {fileId: number} param 
  */
-export const findAFileInfoServer = (param: {fileId: Number}) => {
-    return axios.post('/file/findAFileInfoServer', param);
+export const findAFileInfoServer = (param: {fileId: number}) => {
+    return requestMethod('/file/findAFileInfoServer', param);
 }
 
 //进入或者刷新大图标文件区的时候，请求文件数据 param--->{userLoginName:XXX}
-export const getAllFilesInfo = (param: { userLoginName: String }) => {
-    return axios.post('/file/allFilesInfo', param);
+export const getAllFilesInfo = (param: { userLoginName: string }) => {
+    return requestMethod('/file/allFilesInfo', param);
 }
 
 //修改大图标文件的信息
 export const postModifyFileInfo = (param: {
-    userLoginName: String,
-    fileId: Number,
-    fileName:  String,
-    fileAbstract: String,
+    userLoginName: string,
+    fileId: number,
+    fileName:  string,
+    fileAbstract: string,
 }) => {
-    return axios.post('/file/modifyFileInfo', param);
+    return requestMethod('/file/modifyFileInfo', param);
 }
 
 //切换文件的标星
 export const ToggleFileStarServer = (param: {
-    fileId: Number,
-    userLoginName: String,
-    star: Boolean,
+    fileId: number,
+    userLoginName: string,
+    star: boolean,
 }) => {
-    return axios.post('/file/toggleFileStar', param);
+    return requestMethod('/file/toggleFileStar', param);
 }
 
 //移动文件到回收站
 export const MoveFileToRecycleBinServer = (param: {
-    fileId: Number,
-    userLoginName: String,
-    inRecycleBin: Boolean,
+    fileId: number,
+    userLoginName: string,
+    inRecycleBin: boolean,
 }) => {
-    return axios.post('/file/moveFileToRecycleBin', param);
+    return requestMethod('/file/moveFileToRecycleBin', param);
 }
 
 
 /**
  * 删除一个项目文件夹
- * @param {fileId:Number, userLoginName:String} param 
+ * @param {fileId:number, userLoginName:string} param 
  */
 export const DeleteAFlieServer = (param: {
-    fileId: Number,
-    userLoginName: String,
+    fileId: number,
+    userLoginName: string,
 }) => {
-    return axios.post('/file/deleteAFlie', param);
+    return requestMethod('/file/deleteAFlie', param);
 }

@@ -3,10 +3,10 @@
       <div class="formWrap">
         <h1 class="logo">Teambition</h1>
         <el-form
-            :model="ruleForm" 
+            :model="formValues" 
             status-icon 
             :rules="rules" 
-            ref="ruleForm" 
+            ref="formRef" 
             label-width="100px" 
             class="ruleForm"
         >
@@ -20,7 +20,7 @@
                 <el-input
                     v-if="!item.children"
                     :type="item.type" 
-                    v-model="ruleForm[item.id]" 
+                    v-model="formValues[item.id]" 
                     :autocomplete="item.autocomplete"
                 ></el-input>
                 <el-button
@@ -28,7 +28,7 @@
                     v-for="childItem in item.children"
                     :key="childItem.id"
                     :type="childItem.type" 
-                    v-model="ruleForm[childItem.id]"
+                    v-model="formValues[childItem.id]"
                     @click="childItem.clickFn"
                 >{{childItem.name}}</el-button>
             </el-form-item>
@@ -37,24 +37,53 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { mapMutations } from 'vuex';
+
+type FormRuleType = {
+    validator: Function;
+    [index: string]: any;
+};
+
+type DataType = {
+  code: number;
+  data: any;
+  message: string;
+  success: boolean;
+};
+
+type HeadersType = {
+  'content-length': string;
+  'content-type': string;
+};
+
+type ResponseType = {
+  config: any;
+  data: DataType;
+  headers: HeadersType;
+  request: any;
+  status: number;
+  statusText: string;
+};
 
 export default {
   name: 'Login',
   data() {
-        var checkUsername = (rule, value, callback) => {
+        var checkUsername = (rule: FormRuleType, value: string, callback: Function) => {
         if (!value) {
           return callback(new Error('用户名不能为空'));
         }
+        callback();
       };
-      var validatePassword = (rule, value, callback) => {
+      var validatePassword = (rule: FormRuleType, value: number, callback: Function) => {
         if (!value) {
           return callback(new Error('请输入密码'));
         }
+        callback();
       };
 
       return {
-        ruleForm: {
+        formValues: {
             username: '',
             password: '',
         },
@@ -69,6 +98,7 @@ export default {
       };
   },
   methods: {
+      ...mapMutations('users', ['setUserInfo']),
       formConfig() {
         return [
               {
@@ -92,13 +122,13 @@ export default {
                         id: 'login',
                         name: '登录',
                         type: 'primary',
-                        clickFn: this.submitForm,
+                        clickFn: this.loginHandle,
                     },
                     {
                         id: 'register',
                         name: '注册',
                         type: 'primary',
-                        clickFn: this.submitForm,
+                        clickFn: this.registerHandle,
                     },
                     {
                         id: 'reset',
@@ -110,18 +140,41 @@ export default {
               }
         ]
       },
-      submitForm() {
-        this.$refs?.ruleForm?.validate((valid) => {
+      loginHandle() {
+        const formRef: any = this.$refs?.formRef;
+        const { $RequestServer, formValues }: any = this;
+        formRef?.validate((valid: boolean) => {
           if (valid) {
-            console.log(valid)
+            $RequestServer.userApi.login(formValues).then((res: ResponseType) => {
+              const { data: { code, success, data } } = res;
+                if (code === 200 && success) {
+                   this.setUserInfo(data);
+                }
+            });
           } else {
-            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      registerHandle() {
+        const formRef: any = this.$refs?.formRef;
+        const { $RequestServer, formValues }: any = this;
+        formRef?.validate((valid: boolean) => {
+          if (valid) {
+           $RequestServer.userApi.register(formValues).then((res: ResponseType) => {
+              const { data: { code, success, data } } = res;
+                if (code === 200 && success) {
+                   this.setUserInfo(data);
+                }
+            });
+          } else {
             return false;
           }
         });
       },
       resetForm() {
-        this.$refs?.ruleForm?.resetFields();
+        const formRef: any = this.$refs?.formRef;
+        formRef?.resetFields();
       }
   }
 }
