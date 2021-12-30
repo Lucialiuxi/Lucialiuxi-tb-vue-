@@ -52,19 +52,7 @@ type DataType = {
   success: boolean;
 };
 
-type HeadersType = {
-  'content-length': string;
-  'content-type': string;
-};
-
-type ResponseType = {
-  config: any;
-  data: DataType;
-  headers: HeadersType;
-  request: any;
-  status: number;
-  statusText: string;
-};
+import { Session } from '@/utils/storage';
 
 export default {
   name: 'Login',
@@ -84,8 +72,8 @@ export default {
 
       return {
         formValues: {
-            username: '',
-            password: '',
+            username: 'lucia',
+            password: '123456',
         },
         rules: {
           username: [
@@ -140,15 +128,22 @@ export default {
               }
         ]
       },
-      loginHandle() {
+      commonHandle(type: 'login' | 'register') {
         const formRef: any = this.$refs?.formRef;
-        const { $RequestServer, formValues }: any = this;
-        formRef?.validate((valid: boolean) => {
+        const _this = this;
+        console.log(this.$router)
+        formRef?.validate(function(valid: boolean){
           if (valid) {
-            $RequestServer.userApi.login(formValues).then((res: ResponseType) => {
-              const { data: { code, success, data } } = res;
+            _this.$RequestServer.userApi[type](_this.formValues).then( function(res: DataType){
+              const { code, success } = res;
                 if (code === 200 && success) {
-                   this.setUserInfo(data);
+                   _this.setUserInfo(_this.formValues);
+                   (Session as any).set('userInfo', {
+                     ..._this.formValues
+                   });
+                   _this.$router.push({
+                     path: "/file",
+                   })
                 }
             });
           } else {
@@ -156,21 +151,11 @@ export default {
           }
         });
       },
+      loginHandle() {
+        this.commonHandle('login');
+      },
       registerHandle() {
-        const formRef: any = this.$refs?.formRef;
-        const { $RequestServer, formValues }: any = this;
-        formRef?.validate((valid: boolean) => {
-          if (valid) {
-           $RequestServer.userApi.register(formValues).then((res: ResponseType) => {
-              const { data: { code, success, data } } = res;
-                if (code === 200 && success) {
-                   this.setUserInfo(data);
-                }
-            });
-          } else {
-            return false;
-          }
-        });
+        this.commonHandle('register');
       },
       resetForm() {
         const formRef: any = this.$refs?.formRef;

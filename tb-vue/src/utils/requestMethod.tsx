@@ -27,12 +27,19 @@ type DataType = {
     statusText: string;
   };
 
-export const requestMethod = (url: string, param: ParamType, method?: string | undefined) => {
+export const requestMethod = (url: string, params: ParamType, paramType?: string, method?: string | undefined) => {
+    const requestParamType = paramType || 'body'; // body | query | params 暂时没搞懂params怎么传
+    let requestData = {};
+    if (requestParamType === 'body') { // Payload栏显示：Request Payload ；后端用body接收
+        requestData = { data: params };
+    } else if (requestParamType === 'query') { //  Payload栏显示：Query String Parameter；后端用query接收
+        requestData = { params };
+    }
     return new Promise((resolve, reject) => {
         axios({
             method: method || 'POST',
             url,
-            param,
+            ...requestData,
         }).then((res: ResponseType) => {
             const { data: { code, message, success } } = res;
             if (code === 200 && success) {

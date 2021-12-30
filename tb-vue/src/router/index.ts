@@ -1,8 +1,15 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import VueRouter from 'vue-router';
 import Login from '../views/login/index.vue';
+import File from '../views/file/index.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+type RouteConfig = {
+  path: string;
+  name: string;
+  component: Vue;
+}
 
 const routes: Array<RouteConfig> = [
   {
@@ -11,9 +18,14 @@ const routes: Array<RouteConfig> = [
     component: Login,
   },
   {
+    path: '/file',
+    name: 'File',
+    component: File,
+  },
+  {
     path: '/error',
     name: 'Error',
-    component: () => import(/* webpackChunkName: "error" */ '../views/Error.vue')
+    component: () => import(/* webpackChunkName: "error" */ '../views/Error.vue'),
   }
 ]
 

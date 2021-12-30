@@ -10,3 +10,4 @@ declare module 'vue';
 declare module 'element-ui';
 declare module 'axios';
 declare module 'vuex';
+declare module 'vue-router';

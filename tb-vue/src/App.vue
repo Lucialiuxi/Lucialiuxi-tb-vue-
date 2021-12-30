@@ -1,17 +1,13 @@
 <template>
   <div id="app">
-      <Login/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import Login from './views/login/index.vue';
 
 export default {
   name: 'App',
-  components: {
-    Login,
-  },
   mounted() {
     const appElement: HTMLElement | null = document.getElementById('app');
     const height = document.documentElement.clientHeight + 'px';

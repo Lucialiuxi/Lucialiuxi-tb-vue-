@@ -11,8 +11,9 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.prototype.$RequestServer = requestServer;
 
+
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h: Function) => h(App)
 }).$mount('#app');
