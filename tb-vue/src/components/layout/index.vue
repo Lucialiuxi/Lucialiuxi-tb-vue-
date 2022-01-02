@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Session } from '@/utils/storage';
+
 export default {
     name: "layout",
     data() {
@@ -49,9 +49,6 @@ export default {
             value: [],
             userInfo: {},
         }
-    },
-    created(){
-        this.userInfo = Session.get('userInfo');
     },
     methods: {
         remoteMethod(query: string){
