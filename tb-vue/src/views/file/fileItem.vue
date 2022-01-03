@@ -10,6 +10,7 @@
             </h4>
             <div class="buttons">
                 <i class="el-icon-edit"
+                    v-show="!fileItemData.inRecycleBin"
                     @click="onOpenEditDialog(fileItemData)"
                 ></i>
                 <i 
@@ -19,6 +20,16 @@
                         star: fileItemData.star,
                     }"
                     @click="onStarHandle"
+                ></i>
+                <i 
+                    class="el-icon-refresh-left" 
+                    v-show="fileItemData.inRecycleBin"
+                    @click="recoverConfirm"
+                ></i>
+                <i
+                    class="el-icon-delete" 
+                    v-show="fileItemData.inRecycleBin"
+                    @click="deleteConfirm"
                 ></i>
             </div>
         </div>
@@ -62,6 +73,83 @@ export default {
                     _this.getFileData({ username: _this.username});
                 }
             })
+        },
+        // 恢复项目确认
+        recoverConfirm() {
+            const { fileName } = this.fileItemData;
+            this.$confirm(`恢复后，您就可以正常使用【${fileName}】项目了`, '恢复项目', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                beforeClose: this.recoverFile,
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '恢复成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '恢复已取消'
+                });
+            });
+        },
+         // 恢复项目
+        recoverFile(action: 'confirm' | 'cancel', instance: any, done: ()=> void) {
+            const _this = this;
+            if (action=== 'confirm') {
+                this.loading = true;
+                this.$RequestServer.fileApi.moveFileToRecycleBinServer({
+                    ..._this.fileItemData,
+                    inRecycleBin: false,
+                }).then(() => {
+                    _this.getFileData({ username: _this.username});
+                    _this.loading = false;     
+                    done();
+                });
+            } else {
+                done();   
+            }
+        },
+        // 删除项目确认
+        deleteConfirm() {
+            const { fileName } = this.fileItemData;
+            this.$confirm(
+            `一旦你删除了项目【${fileName}】，所有与项目有关的信息将会被永久删除。这是一个不可恢复的操作，请谨慎对待！`,
+            '删除项目', 
+            {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+                beforeClose: this.deleteFile,
+            }).then(() => {
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '删除已取消'
+                });
+            });
+        },
+        // 删除项目
+        deleteFile(action: 'confirm' | 'cancel', instance: any, done: ()=> void) {
+            const _this = this;
+            if (action=== 'confirm') {
+                this.loading = true;
+                this.$RequestServer.fileApi.deleteAFlieServer({
+                    ..._this.fileItemData,
+                    inRecycleBin: false,
+                }).then(() => {
+                    _this.getFileData({ username: _this.username});
+                    _this.loading = false;     
+                    done();
+                });
+            } else {
+                done();   
+            }
         },
     },
 }

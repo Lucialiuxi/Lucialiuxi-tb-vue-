@@ -43,7 +43,7 @@ export const toggleFileStarServer = (param: {
     return requestMethod('/file/toggleFileStar', param);
 }
 
-//移动文件到回收站
+//移动文件到回收站 /从回收站恢复
 export const moveFileToRecycleBinServer = (param: {
     fileId: number,
     username: string,
@@ -57,7 +57,7 @@ export const moveFileToRecycleBinServer = (param: {
  * 删除一个项目文件夹
  * @param {fileId:number, username:string} param 
  */
-export const DeleteAFlieServer = (param: {
+export const deleteAFlieServer = (param: {
     fileId: number,
     username: string,
 }) => {
