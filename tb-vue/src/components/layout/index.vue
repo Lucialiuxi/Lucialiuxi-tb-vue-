@@ -39,8 +39,8 @@
 </template>
 
 <script lang="ts">
-import { createNamespacedHelpers } from 'vuex';
-const { mapState } = createNamespacedHelpers('files/');
+import { mapState, mapMutations } from 'vuex';
+import { Session } from '@/utils/storage';
 
 export default {
     name: "layout",
@@ -52,18 +52,29 @@ export default {
             options: [],
         }
     },
+    mounted() {
+        setTimeout(() => {
+            if (!this.username) {
+                const userInfo = (Session as any).get('userInfo');
+                this.setUserInfo(userInfo);
+                this.userInfo = userInfo;
+            }
+        });
+        
+    },
     methods: {
+        ...mapMutations('users', ['setUserInfo']),
         remoteMethod(query: string){
             this.fileData.filter((item: fileDataItemType) => {
                 if (item.fileName.indexOf(query) !== -1) {
                     return true;
                 }
             });
-            console.log(query, this.fileData)
         },
     },
     computed: {
-        ...mapState(['fileData']),
+        ...mapState('files',['fileData']),
+        ...mapState('users',['username']),
     },
 }
 </script>

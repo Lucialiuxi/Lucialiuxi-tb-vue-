@@ -2,7 +2,7 @@
 import { requestMethod } from '@/utils/requestMethod';
 
 type TaskItem = {
-    userLoginName?: string,//用户的登录名
+    username?: string,//用户的登录名
     fileId: number,//项目文件id
     taskItemId: number,//任务列表id
     taskItemName?: string,//任务列表名

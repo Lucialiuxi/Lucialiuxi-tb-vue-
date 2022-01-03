@@ -13,7 +13,7 @@
                 <i class="el-icon-star-on star unstar"></i>
             </div>
         </div>
-        <div v-else class="new-file-card">
+        <div v-else class="create-file-card" @click="onOpenDialog">
             <i class="el-icon-circle-plus"></i>
             <p class="text">创建新的项目</p>
         </div>
@@ -23,10 +23,7 @@
 <script lang="ts">
 export default {
     name: 'file-item',
-    props: ["fileItemData"],
-    created() {
-        console.log(this.fileItemData)
-    },
+    props: ["fileItemData", 'onOpenDialog'],
     computed: {
         isFileItem(){
             if (!this.fileItemData) return false;

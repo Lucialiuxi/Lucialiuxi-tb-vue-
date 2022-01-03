@@ -4,9 +4,10 @@ declare module '*.vue' {
 }
 
 declare module '*.scss';
+declare module '*.png';
 declare module '*.ts';
 declare module '*.sass';
-declare module 'vue';
+declare module '.vue';
 declare module 'element-ui';
 declare module 'axios';
 declare module 'vuex';

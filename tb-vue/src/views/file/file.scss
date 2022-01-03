@@ -63,10 +63,11 @@
                 }
             }
 
-            .new-file-card {
+            .create-file-card {
                 position: relative;
                 height: 100%;
                 color: #a6a6a6;
+                cursor: pointer;
                 .el-icon-circle-plus {
                     position: absolute;
                     top: 23%;

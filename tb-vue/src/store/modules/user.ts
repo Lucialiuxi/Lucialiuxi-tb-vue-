@@ -11,7 +11,8 @@ export const users = {
     getters: {},
     mutations: {
         setUserInfo(state: UserType, payload: UserType) {
-            state = payload;
+            state.username = payload.username;
+            state.password = payload.password;
         }
     },
 };

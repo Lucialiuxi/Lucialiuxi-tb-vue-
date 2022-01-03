@@ -11,7 +11,7 @@ export const files = {
         },
     },
     actions: {
-        async getFileData(context: any, params: { userLoginName: string }) {
+        async getFileData(context: any, params: { username: string }) {
             await request.fileApi.getAllFilesInfo(params).then((res: any) => {
                 context.commit('changeFileData', res.data)
             });

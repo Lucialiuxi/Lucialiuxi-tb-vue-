@@ -3,12 +3,9 @@ import { requestMethod } from '@/utils/requestMethod';
 
 //新建项目文件夹
 export const createAFileServer = (param: {
-    userLoginName: string,
+    username: string,
     fileName:  string,
     fileAbstract: string,
-    fileId: number,
-    star: boolean,
-    inRecycleBin: boolean
 }) => {
     return requestMethod('/file/createFile', param);
 }
@@ -22,14 +19,14 @@ export const findAFileInfoServer = (param: {fileId: number}) => {
     return requestMethod('/file/findAFileInfoServer', param);
 }
 
-//进入或者刷新大图标文件区的时候，请求文件数据 param--->{userLoginName:XXX}
-export const getAllFilesInfo = (param: { userLoginName: string }) => {
+//进入或者刷新大图标文件区的时候，请求文件数据 param--->{username:XXX}
+export const getAllFilesInfo = (param: { username: string }) => {
     return requestMethod('/file/allFilesInfo', param);
 }
 
 //修改大图标文件的信息
 export const postModifyFileInfo = (param: {
-    userLoginName: string,
+    username: string,
     fileId: number,
     fileName:  string,
     fileAbstract: string,
@@ -40,7 +37,7 @@ export const postModifyFileInfo = (param: {
 //切换文件的标星
 export const ToggleFileStarServer = (param: {
     fileId: number,
-    userLoginName: string,
+    username: string,
     star: boolean,
 }) => {
     return requestMethod('/file/toggleFileStar', param);
@@ -49,7 +46,7 @@ export const ToggleFileStarServer = (param: {
 //移动文件到回收站
 export const MoveFileToRecycleBinServer = (param: {
     fileId: number,
-    userLoginName: string,
+    username: string,
     inRecycleBin: boolean,
 }) => {
     return requestMethod('/file/moveFileToRecycleBin', param);
@@ -58,11 +55,11 @@ export const MoveFileToRecycleBinServer = (param: {
 
 /**
  * 删除一个项目文件夹
- * @param {fileId:number, userLoginName:string} param 
+ * @param {fileId:number, username:string} param 
  */
 export const DeleteAFlieServer = (param: {
     fileId: number,
-    userLoginName: string,
+    username: string,
 }) => {
     return requestMethod('/file/deleteAFlie', param);
 }

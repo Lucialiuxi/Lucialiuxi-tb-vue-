@@ -118,7 +118,6 @@ export default {
       commonHandle(type: 'login' | 'register') {
         const formRef: any = this.$refs?.formRef;
         const _this = this;
-        console.log(this.$router)
         formRef?.validate(function(valid: boolean){
           if (valid) {
             _this.$RequestServer.userApi[type](_this.formValues).then( function(res: DataType){
@@ -130,7 +129,7 @@ export default {
                    });
                    _this.$router.push({
                      path: "/file",
-                   })
+                   });
                 }
             });
           } else {

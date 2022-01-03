@@ -25,7 +25,7 @@ declare global {
   
 
   type fileDataItemType = {
-    userLoginName: string,
+    username: string,
     fileName:  string,
     fileAbstract: string,
     fileId: number,
