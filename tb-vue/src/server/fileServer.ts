@@ -35,7 +35,7 @@ export const postModifyFileInfo = (param: {
 }
 
 //切换文件的标星
-export const ToggleFileStarServer = (param: {
+export const toggleFileStarServer = (param: {
     fileId: number,
     username: string,
     star: boolean,

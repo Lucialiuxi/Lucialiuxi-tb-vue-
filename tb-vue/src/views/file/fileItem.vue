@@ -9,8 +9,17 @@
                 <span>{{fileItemData.fileAbstract}}</span>
             </h4>
             <div class="buttons">
-                <i class="el-icon-edit"></i>
-                <i class="el-icon-star-on star unstar"></i>
+                <i class="el-icon-edit"
+                    @click="onOpenEditDialog"
+                ></i>
+                <i 
+                    v-show="!fileItemData.inRecycleBin"
+                    :class="{
+                        'el-icon-star-on': true,
+                        star: fileItemData.star,
+                    }"
+                    @click="onStarHandle"
+                ></i>
             </div>
         </div>
         <div v-else class="create-file-card" @click="onOpenDialog">
@@ -21,14 +30,39 @@
 </template>
 
 <script lang="ts">
+import { mapActions, mapState } from 'vuex';
 export default {
     name: 'file-item',
-    props: ["fileItemData", 'onOpenDialog'],
+    props: ["fileItemData", 'onOpenDialog', 'onOpenEditDialog'],
+    data () {
+        return {
+            loading: true,
+        };
+    },
     computed: {
+        ...mapState('users', ['username']),
         isFileItem(){
             if (!this.fileItemData) return false;
             return !!Object.keys(this.fileItemData).length;
-        }
+        },
+    },
+    methods: {
+        ...mapActions('files', ['getFileData']),
+        onStarHandle() {
+            const _this = this;
+            this.$RequestServer.fileApi.toggleFileStarServer({
+                ...this.fileItemData,
+                star: !this.fileItemData.star,
+            }).then((res: DataType) => {
+                if (res.success) {
+                    this.$message({
+                         type: 'success',
+                         message: !_this.fileItemData.star ? '标星成功': '取消标星',
+                    });
+                    _this.getFileData({ username: _this.username});
+                }
+            })
+        },
     },
 }
 </script>

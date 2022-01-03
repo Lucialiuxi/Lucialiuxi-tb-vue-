@@ -1,18 +1,40 @@
 <template>
     <layout>
         <template v-slot: default>
-            <div class="files-wrap">
-                <file-item
-                    v-for="item in fileData"
-                    :key="item.fileId"
-                    :fileItemData="item"
-                ></file-item>
-                <file-item key="new-file-item" :onOpenDialog="onOpenDialog"></file-item>
+            <div 
+                :class="[config.class]"
+                v-for="config in renderFileConfig"
+                :key="config.class"
+            >
+                <h3>
+                    {{config.title}}
+                    <span 
+                        v-if="config.showSwitch" 
+                        class="swich-recycle"
+                        @click="onHandleSwitch"
+                    >
+                        {{ showRecycle ? '显示' : '隐藏' }}
+                    </span>
+                </h3>
+                <div class="files-wrap">
+                    <file-item
+                        v-for="item in config.fileData"
+                        :key="item.fileId"
+                        :fileItemData="item"
+                        :onOpenEditDialog="onOpenEditDialog"
+                    ></file-item>
+                    <file-item v-if="config.showCreateCard" key="new-file-item" :onOpenDialog="onOpenDialog"></file-item>
+                </div>
             </div>
+            
             <create-file-dialog 
                 :visible="createFileDialogVisible" 
                 :onCloseDialog="onCloseDialog"
             ></create-file-dialog>
+            <edit-file-dialog
+                :visible="editFileDialogVisible" 
+                :onClose="onCloseEditDialog"
+            ></edit-file-dialog>
         </template>
     </layout>
 </template>
@@ -23,6 +45,7 @@ import layout from '@/components/layout/index.vue';
 import fileItem from './fileItem.vue';
 import { Session } from '@/utils/storage';
 import createFileDialog from './createFileDialog.vue';
+import editFileDialog from './editFileDialog.vue';
 
 const { mapState, mapActions } = createNamespacedHelpers('files/');
 
@@ -32,10 +55,13 @@ export default {
         layout,
         'file-item': fileItem,
         'create-file-dialog': createFileDialog,
+        'edit-file-dialog': editFileDialog,
     },
     data() {
         return {
             createFileDialogVisible: false,
+            editFileDialogVisible: false,
+            showRecycle: false,
         };
     },
     created(){
@@ -44,17 +70,60 @@ export default {
     },
     methods: {
         ...mapActions(['getFileData']),
+        // 打开新建项目弹出页面
         onOpenDialog(){
-            console.log('打开')
             this.createFileDialogVisible = true;
         },
+        // 关闭新建项目弹出页面
         onCloseDialog(){
-            console.log('关闭')
             this.createFileDialogVisible = false;
         },
+        // 打开新建项目弹出页面
+        onOpenEditDialog(){
+            this.editFileDialogVisible = true;
+        },
+        // 关闭项目设置弹出页面
+        onCloseEditDialog(){
+            this.editFileDialogVisible = false;
+        },
+        // 切换项目回收站文件显示模式
+        onHandleSwitch() {
+            const { showRecycle } = this;
+            this.showRecycle = !showRecycle;
+        }
     },
     computed: {
         ...mapState([ 'fileData' ]),
+        starFileData() {
+            return this.fileData.filter((item: fileDataItemType) => item.star);
+        },
+        normalFileData() {
+            return this.fileData.filter((item: fileDataItemType) => !item.inRecycleBin);
+        },
+        recycledFileData() {
+            return this.fileData.filter((item: fileDataItemType) => item.inRecycleBin);
+        },
+        renderFileConfig() {
+            return [
+                {
+                    title: '星表项目',
+                    fileData: this.starFileData,
+                    class: 'star-files',
+                },
+                {
+                    title: '我拥有的项目',
+                    fileData: this.normalFileData,
+                    showCreateCard: true,
+                    class: 'my-own-files',
+                },
+                {
+                    title: '项目回收站',
+                    fileData: this.recycledFileData,
+                    showSwitch: true,
+                    class: 'recycled-Flies',
+                },
+            ]
+        }
     },
 }
 </script>

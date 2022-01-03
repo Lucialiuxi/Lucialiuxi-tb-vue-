@@ -29,7 +29,7 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="onCreateFile">完成并创建</el-button>
+            <el-button type="primary" @click="onCreateFile" :loading="loading">完成并创建</el-button>
         </div>
     </el-dialog>
 </template>
@@ -52,7 +52,8 @@ export default {
             rules: {
                 fileName: [{ required: true, message: '项目名称是必填项', trigger: 'blur' }],
                 fileAbstract: [{ required: true, message: '项目简介是必填项', trigger: 'blur' }],
-            }
+            },
+            loading: false,
         }
     },
     computed: {
@@ -63,9 +64,13 @@ export default {
             const _this = this;
             this.$refs?.formRef?.validate(function(valid: boolean) {
                 if (valid) {
+                    _this.loading = true;
                     _this.$RequestServer.fileApi.createAFileServer({
                         username: _this.username,
                         ..._this.form,
+                    }).then(() => {
+                        _this.loading = false;
+                        _this.onCloseDialog();
                     });
                 }
             })

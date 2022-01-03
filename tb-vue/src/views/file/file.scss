@@ -1,3 +1,23 @@
+.star-files,
+.my-own-files,
+.recycled-Flies {
+    > h3 {
+        text-align: start;
+        text-indent: 40px;
+        font-size: 18px;
+        height: 20px;
+        line-height: 20px;
+        margin: 0;
+        color: #383838;
+        padding: 15px 0;
+        font-weight: initial;
+        .swich-recycle {
+            font-size: 13px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+    }
+}
 .files-wrap {
     display: flex;
     flex-wrap: wrap;
@@ -19,6 +39,10 @@
             transition: transform .218s ease,-webkit-transform .218s ease;
             padding: 0;
             
+            &:hover {
+                transform: translateY(-2px); 
+                box-shadow: 0 2px 20px rgba(36, 33, 33, 0.5);
+            }
             .wrap {
                 display: flex;
                 flex-direction: row;
@@ -37,7 +61,9 @@
                     
                     span {
                         padding: 0 0 5px 10px;
-                        
+                        &:nth-child(2) {
+                            font-size: 14px;
+                        }
                     }
                 }
 
