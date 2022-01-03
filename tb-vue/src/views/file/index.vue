@@ -34,6 +34,7 @@
             <edit-file-dialog
                 :visible="editFileDialogVisible" 
                 :onClose="onCloseEditDialog"
+                :fileDataItem="currentFileItem"
             ></edit-file-dialog>
         </template>
     </layout>
@@ -62,6 +63,7 @@ export default {
             createFileDialogVisible: false,
             editFileDialogVisible: false,
             showRecycle: false,
+            currentFileItem: {},
         };
     },
     created(){
@@ -79,8 +81,9 @@ export default {
             this.createFileDialogVisible = false;
         },
         // 打开新建项目弹出页面
-        onOpenEditDialog(){
+        onOpenEditDialog(currentFileItem: fileDataItemType){
             this.editFileDialogVisible = true;
+            this.currentFileItem = currentFileItem;
         },
         // 关闭项目设置弹出页面
         onCloseEditDialog(){

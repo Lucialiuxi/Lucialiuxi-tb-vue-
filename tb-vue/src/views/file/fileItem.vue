@@ -10,7 +10,7 @@
             </h4>
             <div class="buttons">
                 <i class="el-icon-edit"
-                    @click="onOpenEditDialog"
+                    @click="onOpenEditDialog(fileItemData)"
                 ></i>
                 <i 
                     v-show="!fileItemData.inRecycleBin"

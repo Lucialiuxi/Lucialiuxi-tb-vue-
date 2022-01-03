@@ -1,0 +1,77 @@
+/deep/ .el-dialog__body {
+    height: 310px;
+    padding: 24px 0 0 24px;
+}
+.eidt-file-dialog {
+    .content-wrap {
+        display: flex;
+        justify-content: space-between;
+        .content-left,
+        .content-right {
+            height:  310px;
+        }
+        .content-left {
+            width: 20%;
+            
+            > li {
+                text-align: start;
+                padding-left: 10px;
+                box-sizing: border-box;
+                height: 55px;
+                border-bottom: 1px solid #eeeeee;
+                line-height: 55px;
+                font-size: 14px;
+                color: #808080;
+                cursor: pointer;
+                &.active {
+                    color: #3da8f5;
+                }
+                i {
+                    font-size: 25px;
+                }
+                span {
+                    display: inline-block;
+                    margin-left: 10px;
+                }
+            }
+            
+
+            font: {
+                family: fantasy;
+                size: 14px;
+                weight: bold;
+            }
+        }
+
+        .content-right {
+           width: 80%;
+           padding: 20px 30px;
+
+           .operate-to-recycle-bin {
+               height: 100%;
+               text-align: start;
+
+               h5 {
+                height: 48px;
+                line-height: 48px;
+                display: block;
+                font-size: 14px;
+                color: #383838;
+               }
+
+               p {
+                   margin-bottom: 10px;
+               }
+
+               /deep/ .el-button--danger {
+                    background-color: #e92525;
+                    border-color: #e92525;
+                    &:hover {
+                        background-color: #f86969;
+                        border-color: #f86969;
+                    }
+               }
+           }
+        }
+    }
+}

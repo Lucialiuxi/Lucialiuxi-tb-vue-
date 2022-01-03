@@ -24,8 +24,8 @@ export const getAllFilesInfo = (param: { username: string }) => {
     return requestMethod('/file/allFilesInfo', param);
 }
 
-//修改大图标文件的信息
-export const postModifyFileInfo = (param: {
+//修改文件的信息 
+export const modifyFileInfo = (param: {
     username: string,
     fileId: number,
     fileName:  string,
@@ -44,7 +44,7 @@ export const toggleFileStarServer = (param: {
 }
 
 //移动文件到回收站
-export const MoveFileToRecycleBinServer = (param: {
+export const moveFileToRecycleBinServer = (param: {
     fileId: number,
     username: string,
     inRecycleBin: boolean,

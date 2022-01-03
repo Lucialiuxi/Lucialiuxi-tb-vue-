@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import imgSrc from '@/assets/illustration.png';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'createFileDialog',
@@ -60,6 +60,7 @@ export default {
         ...mapState('users', [ 'username' ]),
     },
     methods: {
+        ...mapActions('files', ['getFileData']),
         onCreateFile() {
             const _this = this;
             this.$refs?.formRef?.validate(function(valid: boolean) {
@@ -69,6 +70,7 @@ export default {
                         username: _this.username,
                         ..._this.form,
                     }).then(() => {
+                        _this.getFileData({ username: _this.username});
                         _this.loading = false;
                         _this.onCloseDialog();
                     });
