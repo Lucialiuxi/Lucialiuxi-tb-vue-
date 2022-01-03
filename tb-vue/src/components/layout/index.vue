@@ -39,21 +39,31 @@
 </template>
 
 <script lang="ts">
+import { createNamespacedHelpers } from 'vuex';
+const { mapState } = createNamespacedHelpers('files/');
 
 export default {
     name: "layout",
     data() {
         return {
-            options: [],
             loading: false,
             value: [],
             userInfo: {},
+            options: [],
         }
     },
     methods: {
         remoteMethod(query: string){
-            console.log(query)
+            this.fileData.filter((item: fileDataItemType) => {
+                if (item.fileName.indexOf(query) !== -1) {
+                    return true;
+                }
+            });
+            console.log(query, this.fileData)
         },
+    },
+    computed: {
+        ...mapState(['fileData']),
     },
 }
 </script>

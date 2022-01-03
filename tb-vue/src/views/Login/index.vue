@@ -39,19 +39,6 @@
 
 <script lang="ts">
 import { mapMutations } from 'vuex';
-
-type FormRuleType = {
-    validator: Function;
-    [index: string]: any;
-};
-
-type DataType = {
-  code: number;
-  data: any;
-  message: string;
-  success: boolean;
-};
-
 import { Session } from '@/utils/storage';
 
 export default {

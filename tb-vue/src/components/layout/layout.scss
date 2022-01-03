@@ -26,14 +26,18 @@
             .search-file-box {
                 position: relative;
                 top: 8px;
-                :nth-child(1) {
-                    :nth-child(2) {
+                border-radius: 20px;
+                overflow: hidden;
+
+                /deep/ .el-select__tags {
+                    input {
                         padding-left: 20px;
                     }
                 }
-                :nth-child(2) {
+
+                /deep/ .el-input--suffix {
                     overflow: hidden;
-                    :nth-child(1) {
+                    .el-input__inner {
                         padding-left: 30px;
                         border-radius: 20px;
                         background-color: #f5f5f5;

@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 type RouteConfig = {
   path: string;
   name: string;
-  component: Vue;
+  component: any;
 }
 
 const routes: Array<RouteConfig> = [

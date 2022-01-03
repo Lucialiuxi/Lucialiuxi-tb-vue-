@@ -3,15 +3,19 @@
         class="fileCover"
         :body-style="{ padding: '0px', height: '100%' }"
     >
-        <div class="wrap">
+        <div class="wrap" v-if="isFileItem">
             <h4 class="text-content">
-                <span>{{fileItemData.FileName}}</span>
-                <span>{{fileItemData.FileAbstract}}</span>
+                <span>{{fileItemData.fileName}}</span>
+                <span>{{fileItemData.fileAbstract}}</span>
             </h4>
             <div class="buttons">
                 <i class="el-icon-edit"></i>
                 <i class="el-icon-star-on star unstar"></i>
             </div>
+        </div>
+        <div v-else class="new-file-card">
+            <i class="el-icon-circle-plus"></i>
+            <p class="text">创建新的项目</p>
         </div>
     </el-card>
 </template>
@@ -19,7 +23,16 @@
 <script lang="ts">
 export default {
     name: 'file-item',
-    props: ["fileItemData"]
+    props: ["fileItemData"],
+    created() {
+        console.log(this.fileItemData)
+    },
+    computed: {
+        isFileItem(){
+            if (!this.fileItemData) return false;
+            return !!Object.keys(this.fileItemData).length;
+        }
+    },
 }
 </script>
 

@@ -88,7 +88,7 @@ export const MoveOrCopyOneGroupWorkFilesServer = (param: {
 
 export const SearchFileByFileNameServer = (param: {
     userLoginName: string,
-    FileName: string,
+    fileName: string,
 }) => {
     return requestMethod('/works/searchFileByFileName', param);   
 }

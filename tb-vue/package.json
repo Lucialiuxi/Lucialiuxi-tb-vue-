@@ -42,6 +42,12 @@
     "env": {
       "node": true
     },
+    "globals":{
+      "DataType": true,
+      "FormRuleType": true,
+      "fileDataItemType": true,
+      "fileDataType": true
+    },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended",

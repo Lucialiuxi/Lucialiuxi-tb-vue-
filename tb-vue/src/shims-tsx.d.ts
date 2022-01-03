@@ -1,4 +1,4 @@
-import Vue, { VNode } from 'vue'
+import Vue, { VNode } from 'vue';
 
 declare global {
   namespace JSX {
@@ -10,4 +10,30 @@ declare global {
       [elem: string]: any
     }
   }
+
+  interface DataType {
+    code: number;
+    data: any;
+    message: string;
+    success: boolean;
+  }
+
+  type FormRuleType = {
+    validator: Function;
+    [index: string]: any;
+  }
+  
+
+  type fileDataItemType = {
+    userLoginName: string,
+    fileName:  string,
+    fileAbstract: string,
+    fileId: number,
+    star: boolean,
+    inRecycleBin: boolean
+  };
+
+  
+  type fileDataType = Array<fileDataItemType>;
+
 }
