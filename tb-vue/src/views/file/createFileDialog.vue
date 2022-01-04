@@ -7,6 +7,7 @@
         center
         custom-class="create-file-dialog"
         :before-close="onCloseDialog"
+        destroy-on-close
     >
         <div class="description">
             <img :src="imgSrc"/>

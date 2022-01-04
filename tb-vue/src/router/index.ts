@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
     component: Login,
   },
   {
-    path: '/file',
+    path: '/project',
     name: 'File',
     component: File,
   },

@@ -5,6 +5,7 @@
         width="670px"
         :before-close="onClose"
         custom-class="eidt-file-dialog"
+        destroy-on-close
     >
         <div class="content-wrap">
             <ul class="content-left">

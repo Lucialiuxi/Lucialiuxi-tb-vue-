@@ -128,7 +128,7 @@ export default {
                      ..._this.formValues
                    });
                    _this.$router.push({
-                     path: "/file",
+                     path: "/project",
                    });
                 }
             });

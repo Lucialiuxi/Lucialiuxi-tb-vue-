@@ -7,7 +7,6 @@
                     <i class="el-icon-search"></i>
                     <el-select
                         v-model="value"
-                        multiple
                         filterable
                         remote
                         reserve-keyword
@@ -21,8 +20,8 @@
                         <el-option
                             v-for="item in options"
                             :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
+                            :label="item.fileName"
+                            :value="item.fileId"
                         >
                         </el-option>
                     </el-select>
@@ -62,14 +61,28 @@ export default {
         });
         
     },
+    filters: {
+        
+    },
     methods: {
         ...mapMutations('users', ['setUserInfo']),
         remoteMethod(query: string){
-            this.fileData.filter((item: fileDataItemType) => {
-                if (item.fileName.indexOf(query) !== -1) {
-                    return true;
-                }
-            });
+            if (query) {
+                this.options = this.fileData.filter(({ fileName }: fileDataItemType) => {
+                    const parttern = new RegExp("[A-Za-z]+");
+                    if(
+                        parttern.test(query) &&
+                        fileName.toLowerCase().indexOf(query.toLowerCase()) !== -1
+                    ) {
+                        return true;
+                    } else if (fileName.indexOf(query) !== -1) {
+                        return true;
+                    }
+                    return false;
+                });
+            } else {
+                this.options = [];
+            }
         },
     },
     computed: {

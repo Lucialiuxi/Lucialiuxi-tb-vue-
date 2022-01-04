@@ -27,11 +27,13 @@
                 </div>
             </div>
             
-            <create-file-dialog 
+            <create-file-dialog
+                v-if="createFileDialogVisible"
                 :visible="createFileDialogVisible" 
                 :onCloseDialog="onCloseDialog"
             ></create-file-dialog>
             <edit-file-dialog
+                v-if="editFileDialogVisible"
                 :visible="editFileDialogVisible" 
                 :onClose="onCloseEditDialog"
                 :fileDataItem="currentFileItem"

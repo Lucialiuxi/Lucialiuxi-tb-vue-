@@ -7,6 +7,7 @@
             <h4 class="text-content">
                 <span>{{fileItemData.fileName}}</span>
                 <span>{{fileItemData.fileAbstract}}</span>
+                <span v-if="fileItemData.createTime">{{fileItemData.createTime | formatDate}}</span>
             </h4>
             <div class="buttons">
                 <i class="el-icon-edit"
