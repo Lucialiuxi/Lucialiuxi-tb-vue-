@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Login from '../views/login/index.vue';
-import File from '../views/file/index.vue';
+import File from '../views/project/index.vue';
 import Demo from '../views/demo/index.vue';
 
 Vue.use(VueRouter);

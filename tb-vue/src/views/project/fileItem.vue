@@ -3,7 +3,7 @@
         class="fileCover"
         :body-style="{ padding: '0px', height: '100%' }"
     >
-        <div class="wrap" v-if="isFileItem">
+        <div class="wrap" v-if="isFileItem" @click="toProjectDetail">
             <h4 class="text-content">
                 <span>{{fileItemData.fileName}}</span>
                 <span>{{fileItemData.fileAbstract}}</span>
@@ -45,7 +45,7 @@
 import { mapActions, mapState } from 'vuex';
 export default {
     name: 'file-item',
-    props: ["fileItemData", 'onOpenDialog', 'onOpenEditDialog'],
+    props: ['fileItemData', 'onOpenDialog', 'onOpenEditDialog'],
     data () {
         return {
             loading: true,
@@ -138,7 +138,7 @@ export default {
         // 删除项目
         deleteFile(action: 'confirm' | 'cancel', instance: any, done: ()=> void) {
             const _this = this;
-            if (action=== 'confirm') {
+            if (action === 'confirm') {
                 this.loading = true;
                 this.$RequestServer.fileApi.deleteAFlieServer({
                     ..._this.fileItemData,
@@ -150,6 +150,13 @@ export default {
                 });
             } else {
                 done();   
+            }
+        },
+        // 进入项目
+        toProjectDetail(event: any) {
+            const tagName = event.target.nodeName.toLowerCase();
+            if (tagName !== 'i') {
+            console.log(tagName)
             }
         },
     },
