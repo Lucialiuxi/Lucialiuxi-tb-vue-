@@ -23,7 +23,11 @@
                         :fileItemData="item"
                         :onOpenEditDialog="onOpenEditDialog"
                     ></file-item>
-                    <file-item v-if="config.showCreateCard" key="new-file-item" :onOpenDialog="onOpenDialog"></file-item>
+                    <file-item 
+                        v-if="config.showCreateCard"
+                        key="new-file-item" 
+                        :onOpenDialog="onOpenDialog"
+                    ></file-item>
                 </div>
             </div>
             

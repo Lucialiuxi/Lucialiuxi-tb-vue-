@@ -1,0 +1,25 @@
+.tasksWrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    white-space: nowrap;
+    transform: translateZ(0);
+    background-color: #fff;
+    box-sizing: border-box;
+    z-index: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    .taskItem {
+        position: relative;
+        min-width: 288px;
+        min-height: 280px;
+        height: 98%;
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: top;
+        background-color: #eee;
+        border-radius: 5px;
+    }
+}

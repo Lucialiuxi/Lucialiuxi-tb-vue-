@@ -156,7 +156,13 @@ export default {
         toProjectDetail(event: any) {
             const tagName = event.target.nodeName.toLowerCase();
             if (tagName !== 'i') {
-            console.log(tagName)
+                console.log(tagName, this.fileItemData.fileId)
+                this.$router.push({
+                    name: "Task",
+                    params: {
+                        id: this.fileItemData.fileId,
+                    },
+                });
             }
         },
     },
